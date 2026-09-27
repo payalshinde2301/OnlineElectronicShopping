@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Review</title>
+</head>
+
+<body>
+
+<h2>Edit Review</h2>
+
+<form method="POST">
+
+    <input type="number" name="rating" value="{{ data[0] }}" min="1" max="5" required>
+
+    <textarea name="review" required>{{ data[1] }}</textarea>
+
+    <button type="submit">Update</button>
+
+</form>
+
+</body>
+</html>

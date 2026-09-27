@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ product[1] }}</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#f1f5f9;
+}
+
+/* NAVBAR */
+.header {
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo { font-size:22px; font-weight:bold; color:#2563eb; }
+
+/* PRODUCT */
+.product-container {
+    display:flex;
+    gap:40px;
+    padding:40px;
+}
+
+/* IMAGE */
+.zoom-container {
+    width:400px;
+    overflow:hidden;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.zoom-container img {
+    width:100%;
+    height:300px;
+    object-fit:contain;
+    transition:0.2s;
+}
+
+/* DETAILS */
+.product-details {
+    flex:1;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+}
+
+.price { color:green; font-size:24px; }
+
+/* BUTTONS */
+.btn {
+    padding:12px 20px;
+    margin:10px 5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.cart-btn { background:#2563eb; color:white; }
+.wishlist-btn { background:#ef4444; color:white; }
+
+/* REVIEW */
+.review-box {
+    margin:30px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.review-item {
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+}
+
+/* STARS */
+.stars {
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.stars input { display:none; }
+
+.stars label {
+    font-size:30px;
+    color:#ccc;
+    cursor:pointer;
+}
+
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+    color: gold;
+}
+
+textarea {
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<!-- PRODUCT -->
+<div class="product-container">
+
+<div class="zoom-container">
+    <img id="main-img" src="{{ url_for('static', filename=product[4]) }}">
+</div>
+
+<div class="product-details">
+
+<h2>{{ product[1] }}</h2>
+
+<div>
+<span style="color:gold;">
+{% for i in range(avg_rating|int) %}★{% endfor %}
+</span>
+<span>{{ avg_rating }} ({{ review_count }} reviews)</span>
+</div>
+
+<div class="price">₹{{ product[3] }}</div>
+
+<p>{{ product[2] }}</p>
+
+<a href="/add_to_cart/{{ product[0] }}">
+<button class="btn cart-btn">🛒 Add to Cart</button>
+</a>
+
+<a href="/add_to_wishlist/{{ product[0] }}">
+<button class="btn wishlist-btn">❤️ Wishlist</button>
+</a>
+
+</div>
+</div>
+
+<!-- ADD REVIEW -->
+<div class="review-box">
+
+<h3>Add Review</h3>
+
+<form method="POST" action="/add_review/{{ product[0] }}">
+
+<div class="stars">
+<input type="radio" name="rating" value="5" id="5"><label for="5">★</label>
+<input type="radio" name="rating" value="4" id="4"><label for="4">★</label>
+<input type="radio" name="rating" value="3" id="3"><label for="3">★</label>
+<input type="radio" name="rating" value="2" id="2"><label for="2">★</label>
+<input type="radio" name="rating" value="1" id="1" required><label for="1">★</label>
+</div>
+
+<textarea name="review" required></textarea>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<!-- SHOW REVIEWS -->
+<div class="review-box">
+
+<h3>Customer Reviews</h3>
+
+{% for r in reviews %}
+<div class="review-item">
+
+<strong>👤 {{ r[0] }}</strong>
+
+<div style="color:gold;">
+{% for i in range(r[1]) %}★{% endfor %}
+</div>
+
+<p>{{ r[2] }}</p>
+
+<a href="/edit_review/{{ r[3] }}/{{ product[0] }}">✏️</a>
+<a href="/delete_review/{{ r[3] }}/{{ product[0] }}">🗑</a>
+
+</div>
+{% endfor %}
+
+</div>
+
+{% include 'footer.html' %}
+
+<script>
+// ZOOM
+const img = document.getElementById("main-img");
+
+img.addEventListener("mousemove", function(e){
+    const rect = img.getBoundingClientRect();
+    const x = ((e.clientX - rect.left)/rect.width)*100;
+    const y = ((e.clientY - rect.top)/rect.height)*100;
+
+    img.style.transformOrigin = x+"% "+y+"%";
+    img.style.transform = "scale(2)";
+});
+
+img.addEventListener("mouseleave", function(){
+    img.style.transform = "scale(1)";
+});
+</script>
+
+</body>
+</html>

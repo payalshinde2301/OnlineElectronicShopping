@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wishlist - ElectroMart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fa;
+}
+
+/* HEADER */
+.header {
+    background: white;
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* CONTAINER */
+.container {
+    padding: 30px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+/* TITLE */
+.card h3 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* PRICE */
+.price {
+    color: green;
+    font-weight: bold;
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* ADD */
+.add {
+    background: #007bff;
+    color: white;
+}
+
+/* REMOVE */
+.remove {
+    background: red;
+    color: white;
+}
+
+/* EMPTY */
+.empty {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 50px;
+}
+
+</style>
+</head>
+
+<body>
+{% include 'navbar.html' %}
+
+<div class="header">
+❤️ Your Wishlist
+</div>
+
+<div class="container">
+
+{% if items %}
+
+<div class="grid">
+
+{% for item in items %}
+<div class="card">
+
+    <!-- IMAGE -->
+    <img src="{{ url_for('static', filename=item[3]) }}" alt="product">
+
+    <!-- NAME -->
+    <h3>{{ item[1] }}</h3>
+
+    <!-- PRICE -->
+    <p class="price">₹{{ item[2] }}</p>
+
+    <!-- BUTTONS -->
+    <a href="/add_to_cart/{{ item[0] }}" class="btn add">🛒 Add to Cart</a>
+    <a href="/remove_from_wishlist/{{ item[0] }}" class="btn remove">❌ Remove</a>
+
+</div>
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+    😢 Your wishlist is empty <br><br>
+    <a href="/">Go Shopping →</a>
+</div>
+
+{% endif %}
+
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

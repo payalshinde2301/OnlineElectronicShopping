@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment - ElectroMart</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+/* PAGE STRUCTURE */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CENTER CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+/* CARD */
+.box {
+    background: white;
+    padding: 30px;
+    width: 420px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* TITLE */
+h2 {
+    text-align: center;
+}
+
+/* OPTION */
+.option {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.option:hover {
+    background: #f1f5f9;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: darkorange;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- ✅ NAVBAR -->
+    {% include 'navbar.html' %}
+
+    <!-- ✅ CONTENT -->
+    <div class="content">
+
+        <div class="box">
+            <h2>Select Payment Method</h2>
+
+            <form method="POST" action="/payment_method">
+
+                <div class="option">
+                    <label>
+                        <input type="radio" name="method" value="online" required>
+                        💳 Pay Online (UPI / Card / Netbanking)
+                    </label>
+                </div>
+
+                <div class="option">
+                    <label>
+                        <input type="radio" name="method" value="cod">
+                        📦 Cash on Delivery
+                    </label>
+                </div>
+
+                <br>
+                <button type="submit">Continue</button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- ✅ FOOTER -->
+    {% include 'footer.html' %}
+
+</div>
+
+</body>
+</html>

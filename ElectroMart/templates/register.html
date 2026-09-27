@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register - ElectroMart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== BACKGROUND ===== */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 40px;
+    width: 380px;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    color: white;
+    animation: fadeIn 0.6s ease;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* TITLE */
+.container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* INPUT BOX */
+.input-box {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* FOCUS EFFECT */
+.input-box input:focus {
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* PASSWORD TOGGLE */
+.input-box span {
+    position:absolute;
+    right:10px;
+    top:10px;
+    cursor:pointer;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #ff7eb3;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff4f81;
+}
+
+/* FLASH MESSAGE */
+.flash {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 8px;
+    background: rgba(255,0,0,0.2);
+    border-radius: 6px;
+}
+
+/* PASSWORD MATCH MESSAGE */
+#message {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* LINKS */
+.extra {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.extra a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.extra a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>✨ Create Account</h2>
+
+    <!-- FLASH MESSAGE (FIXED) -->
+    {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" onsubmit="return validatePassword()">
+
+        <div class="input-box">
+            <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="input-box">
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span onclick="togglePassword('password')">👁️</span>
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" onkeyup="checkMatch()" required>
+            <span onclick="togglePassword('confirm_password')">👁️</span>
+        </div>
+
+        <p id="message"></p>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <div class="extra">
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+// 👁 Toggle Password
+function togglePassword(id) {
+    let input = document.getElementById(id);
+    input.type = (input.type === "password") ? "text" : "password";
+}
+
+// 🔍 Live Match Check
+function checkMatch() {
+    let pass = document.getElementById("password").value;
+    let confirmPass = document.getElementById("confirm_password").value;
+    let message = document.getElementById("message");
+
+    if (confirmPass === "") {
+        message.innerHTML = "";
+        return;
+    }
+
+    if (pass === confirmPass) {
+        message.style.color = "lightgreen";
+        message.innerHTML = "✅ Password Matched";
+    } else {
+        message.style.color = "red";
+        message.innerHTML = "❌ Password Not Matched";
+    }
+}
+
+// 🚫 Prevent Submit
+function validatePassword() {
+    let pass = document.getElementById("password").value;
+    let confirmPass = document.getElementById("confirm_password").value;
+
+    if (pass !== confirmPass) {
+        alert("❌ Password Not Matched!");
+        return false;
+    }
+    return true;
+}
+
+</script>
+
+</body>
+</html>

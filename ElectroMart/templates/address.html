@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delivery Address</title>
+
+<style>
+
+body {
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* PAGE WRAPPER */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CONTENT CENTER */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+/* CARD */
+.container {
+    background: rgba(255,255,255,0.15);
+    padding: 30px;
+    width: 420px;
+    border-radius: 15px;
+    backdrop-filter: blur(12px);
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: orange;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover {
+    background: darkorange;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- ✅ NAVBAR -->
+    {% include 'navbar.html' %}
+
+    <!-- ✅ MAIN CONTENT -->
+    <div class="content">
+
+        <div class="container">
+
+            <h2>📍 Delivery Address</h2>
+
+            <form method="POST">
+
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="pin" placeholder="Pincode" required>
+
+                <button type="submit">Continue to Payment</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ✅ FOOTER -->
+    {% include 'footer.html' %}
+
+</div>
+
+</body>
+</html>

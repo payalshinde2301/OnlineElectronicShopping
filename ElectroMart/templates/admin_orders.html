@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Orders</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f5f5;
+}
+
+.container {
+    padding: 20px;
+}
+/* NAVBAR */
+.navbar {
+    background: rgba(0,0,0,0.8);
+    padding: 15px 30px;
+    color: white;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    color: orange;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 6px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.accept { background: green; color: white; }
+.reject { background: red; color: white; }
+.ship { background: purple; color: white; }
+.deliver { background: blue; color: white; }
+
+.status {
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+     <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/orders">Orders</a>
+        <a href="/admin/products">Products</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+<h2>📦 Admin Order Panel</h2>
+
+{% for o in orders %}
+<div class="card">
+
+            <p><b>Order ID:</b> {{ o[0] }}</p>
+        <p><b>Customer:</b> {{ o[1] }}</p>
+        <p><b>Phone:</b> {{ o[2] }}</p>
+        <p><b>Address:</b> {{ o[3] }}</p>
+        <p><b>Product:</b> {{ o[4] }}</p>
+        <p><b>Quantity:</b> {{ o[5] }}</p>
+        <p><b>Total:</b> ₹{{ o[6] }}</p>
+        <p><b>Status:</b> {{ o[7] }}</p>
+
+    <p class="status"><b>Status:</b> {{ o[7] }}</p>
+
+    <!-- ACTION BUTTONS -->
+    {% if o[7] == 'Pending' %}
+        <a href="/admin/accept_order/{{ o[0] }}">
+            <button class="btn accept">Accept</button>
+        </a>
+
+        <a href="/admin/reject_order/{{ o[0] }}">
+            <button class="btn reject">Reject</button>
+        </a>
+
+    {% elif o[7] == 'Accepted' %}
+        <a href="/admin/ship_order/{{ o[0] }}">
+            <button class="btn ship">Ship</button>
+        </a>
+
+    {% elif o[7] == 'Shipped' %}
+        <a href="/admin/deliver_order/{{ o[0] }}">
+            <button class="btn deliver">Deliver</button>
+        </a>
+    {% endif %}
+
+</div>
+{% endfor %}
+
+</div>
+
+</body>
+</html>

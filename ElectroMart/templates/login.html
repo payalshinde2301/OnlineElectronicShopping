@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - ElectroMart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* ===== BACKGROUND ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== LOGIN BOX ===== */
+.login-container {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 40px;
+    width: 350px;
+    border-radius: 15px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    color: white;
+    animation: fadeIn 0.6s ease;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TITLE ===== */
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* ===== INPUTS ===== */
+.input-box {
+    margin-bottom: 18px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* FOCUS EFFECT */
+.input-box input:focus {
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* ===== BUTTON ===== */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #ff9800;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e68900;
+}
+
+/* ===== FLASH MESSAGE ===== */
+.flash {
+    background: rgba(255,0,0,0.2);
+    padding: 8px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ===== LINKS ===== */
+.extra {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.extra a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.extra a:hover {
+    text-decoration: underline;
+}
+
+/* ===== FORGOT PASSWORD ===== */
+.forgot {
+    text-align: right;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.forgot a {
+    color: #ddd;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <h2>🔐 Login</h2>
+
+    <!-- FLASH MESSAGE -->
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <div class="input-box">
+            <input type="email" name="email" placeholder="Enter Email" required>
+        </div>
+
+        <div class="input-box">
+            <input type="password" name="password" placeholder="Enter Password" required>
+        </div>
+
+        <div class="forgot">
+            <a href="/forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <div class="extra">
+        <p>Don't have an account? <a href="/register">Sign Up</a></p>
+    </div>
+
+</div>
+
+</body>
+</html>

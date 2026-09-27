@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pay Now</title>
+</head>
+<body>
+
+<h2 style="text-align:center;">Processing Payment...</h2>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "YOUR_KEY_ID",
+    "amount": "{{ order['amount'] }}",
+    "currency": "INR",
+    "name": "ElectroMart",
+    "description": "Order Payment",
+    "order_id": "{{ order['id'] }}",
+
+    "handler": function (response){
+    window.location.href = "/payment_success";
+}
+    }
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+</script>
+
+</body>
+</html>

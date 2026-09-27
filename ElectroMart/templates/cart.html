@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cart - ElectroMart</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(135deg,#e0f2fe,#f8fafc);
+}
+
+/* NAVBAR */
+.header {
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size:22px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.header a {
+    margin-left:15px;
+    text-decoration:none;
+    color:#333;
+}
+
+/* CONTAINER */
+.container {
+    padding:30px;
+}
+
+/* CART ITEM */
+.cart-item {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.cart-item:hover {
+    transform:translateY(-3px);
+}
+
+/* LEFT */
+.cart-left {
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+/* IMAGE FIX */
+.cart-left img {
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#f9f9f9;
+}
+
+/* DETAILS */
+.cart-details h3 {
+    margin:0;
+}
+
+.price {
+    color:green;
+    font-weight:bold;
+    margin:5px 0;
+}
+
+/* QTY */
+.qty-box {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.qty-btn {
+    padding:6px 12px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* REMOVE */
+.remove-btn {
+    color:red;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* TOTAL */
+.total-box {
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-top:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.checkout-btn {
+    background:green;
+    color:white;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    margin-top:10px;
+}
+
+/* EMPTY */
+.empty {
+    text-align:center;
+    font-size:20px;
+    margin-top:50px;
+}
+
+</style>
+</head>
+
+<body>
+{% include 'navbar.html' %}
+
+
+<div class="container">
+
+<h2>🛒 Your Cart</h2>
+
+{% if items %}
+
+    {% for item in items %}
+    <div class="cart-item">
+
+        <!-- LEFT -->
+        <div class="cart-left">
+
+            <!-- ✅ FIXED IMAGE -->
+            <img src="{{ url_for('static', filename=item[4]) }}">
+
+            <div class="cart-details">
+                <h3>{{ item[1] }}</h3>
+
+                <p class="price">₹{{ item[2] }} × {{ item[3] }}</p>
+
+                <!-- QTY -->
+                <div class="qty-box">
+
+                    <a href="/decrease_qty/{{ item[0] }}">
+                        <button class="qty-btn">−</button>
+                    </a>
+
+                    <span>{{ item[3] }}</span>
+
+                    <a href="/increase_qty/{{ item[0] }}">
+                        <button class="qty-btn">+</button>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+            <a class="remove-btn" href="/remove_from_cart/{{ item[0] }}">
+                ❌ Remove
+            </a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <!-- TOTAL -->
+    <div class="total-box">
+        <h2>Total: ₹{{ total }}</h2>
+
+        <a href="/address">
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </a>
+    </div>
+
+{% else %}
+
+<div class="empty">
+    😢 Your cart is empty <br><br>
+    <a href="/">Go Shopping →</a>
+</div>
+
+{% endif %}
+
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

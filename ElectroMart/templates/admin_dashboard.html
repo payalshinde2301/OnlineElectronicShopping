@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71') no-repeat center center/cover;
+}
+
+/* DARK OVERLAY */
+.overlay {
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+    background: rgba(0,0,0,0.8);
+    padding: 15px 30px;
+    color: white;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    color: orange;
+}
+
+/* CONTAINER */
+.container {
+    padding: 30px;
+    color: white;
+}
+
+/* TITLE */
+h2 {
+    margin-bottom: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.card p {
+    margin-top: 10px;
+    color: #ddd;
+}
+
+/* CHART */
+.chart-box {
+    background: rgba(255,255,255,0.1);
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+canvas {
+    max-height: 300px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/orders">Orders</a>
+        <a href="/admin/products">Products</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <h2>📊 Admin Dashboard</h2>
+
+        <!-- CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>{{ total_orders }}</h3>
+                <p>Total Orders</p>
+            </div>
+
+            <div class="card">
+                <h3>₹{{ revenue }}</h3>
+                <p>Total Revenue</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ total_products }}</h3>
+                <p>Total Products</p>
+            </div>
+
+        </div>
+
+        <!-- CHART -->
+        <div class="chart-box">
+            <canvas id="chart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+var ctx = document.getElementById('chart').getContext('2d');
+
+var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ chart_data | map(attribute=0) | list | safe }},
+        datasets: [{
+            label: 'Orders',
+            data: {{ chart_data | map(attribute=1) | list | safe }},
+            borderWidth: 2,
+            fill: false
+        }]
+    }
+});
+</script>
+
+</body>
+</html>
