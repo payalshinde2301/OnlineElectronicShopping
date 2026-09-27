@@ -32,5 +32,5 @@ The main objective of ElectroMart is to develop a user-friendly online platform 
 
 ## 👩‍💻 Developed By
 
-Ayra  
+Payal Shinde
 TYBCA Student
